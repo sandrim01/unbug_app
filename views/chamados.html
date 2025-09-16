@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Chamado - Unbug Solutions TI</title>
+    <meta name="description" content="Abra um chamado de suporte técnico na Unbug Solutions TI. Descreva seu problema e nossa equipe entrará em contato rapidamente.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/logo_img.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/img/logo_img.png" alt="Unbug Solutions TI">
+                    <h1>Unbug Solutions TI</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/chamados">Abrir Chamado</a></li>
+                        <li><a href="/#servicos">Serviços</a></li>
+                        <li><a href="/#contato">Contato</a></li>
+                        <li><a href="/admin">Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main style="padding: 40px 0; min-height: 80vh;">
+        <div class="container-sm">
+            <div class="text-center mb-4">
+                <h1 style="font-size: 2.5rem; margin-bottom: 20px; color: #1e293b;">Abrir Chamado de Suporte</h1>
+                <p style="font-size: 1.2rem; color: #64748b;">
+                    Descreva seu problema técnico e nossa equipe entrará em contato rapidamente.
+                </p>
+            </div>
+
+            <!-- Informações importantes -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 style="color: #2563eb; margin-bottom: 15px;">📋 Antes de abrir o chamado:</h3>
+                    <ul style="color: #64748b; margin-left: 20px;">
+                        <li>Descreva o problema com o máximo de detalhes possível</li>
+                        <li>Informe quando o problema começou a ocorrer</li>
+                        <li>Mencione se houve alguma alteração recente no sistema</li>
+                        <li>Para problemas urgentes, ligue para (11) 99999-0000</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Formulário de Chamado -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Formulário de Abertura de Chamado</h2>
+                </div>
+                <div class="card-body">
+                    <form id="chamadoForm">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="nome">Nome Completo *</label>
+                                    <input type="text" id="nome" name="nome" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="email">E-mail *</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="telefone">Telefone</label>
+                                    <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="(11) 99999-9999">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="empresa">Empresa</label>
+                                    <input type="text" id="empresa" name="empresa" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="tipo_problema">Tipo do Problema *</label>
+                                    <select id="tipo_problema" name="tipo_problema" class="form-control form-select" required>
+                                        <option value="">Selecione o tipo</option>
+                                        <option value="hardware">Hardware (computador, impressora, etc.)</option>
+                                        <option value="software">Software (programas, sistema operacional)</option>
+                                        <option value="rede">Rede e Internet</option>
+                                        <option value="email">E-mail</option>
+                                        <option value="backup">Backup e Recuperação</option>
+                                        <option value="seguranca">Segurança (vírus, malware)</option>
+                                        <option value="telefonia">Telefonia e Comunicação</option>
+                                        <option value="servidor">Servidor</option>
+                                        <option value="outros">Outros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="urgencia">Nível de Urgência *</label>
+                                    <select id="urgencia" name="urgencia" class="form-control form-select" required>
+                                        <option value="baixa">Baixa - Posso aguardar alguns dias</option>
+                                        <option value="media" selected>Média - Preciso resolver em até 24h</option>
+                                        <option value="alta">Alta - Preciso resolver hoje</option>
+                                        <option value="critica">Crítica - Sistema parado, preciso resolver agora</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="descricao">Descrição do Problema *</label>
+                            <textarea id="descricao" name="descricao" class="form-control" rows="6" required 
+                                placeholder="Descreva detalhadamente o problema:
+• O que estava fazendo quando o problema ocorreu?
+• Qual é a mensagem de erro (se houver)?
+• O problema acontece sempre ou esporadicamente?
+• Quando o problema começou?
+• Houve alguma alteração recente no sistema?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #2563eb;">
+                                <h4 style="color: #2563eb; margin-bottom: 10px;">🔒 Política de Privacidade</h4>
+                                <p style="color: #64748b; margin: 0; font-size: 0.9rem;">
+                                    Seus dados serão utilizados apenas para resolução do chamado e não serão compartilhados com terceiros. 
+                                    Mantemos suas informações seguras e confidenciais.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" style="min-width: 200px;">
+                                <span id="btnText">Abrir Chamado</span>
+                                <span id="btnLoading" class="loading d-none"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Área de Resultado -->
+            <div id="resultado" style="margin-top: 30px;"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Unbug Solutions TI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+        document.getElementById('chamadoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            const resultado = document.getElementById('resultado');
+            
+            // Mostrar loading
+            submitBtn.disabled = true;
+            btnText.classList.add('d-none');
+            btnLoading.classList.remove('d-none');
+            
+            // Coletar dados do formulário
+            const formData = new FormData(this);
+            const dados = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch('/api/chamados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dados)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultado.innerHTML = `
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <div style="font-size: 4rem; color: #10b981; margin-bottom: 20px;">✅</div>
+                                <h2 style="color: #10b981; margin-bottom: 20px;">Chamado Criado com Sucesso!</h2>
+                                <div class="alert alert-success">
+                                    <h3>Número do Chamado: #${data.chamado.id}</h3>
+                                    <p style="margin-top: 15px;">
+                                        <strong>Solicitante:</strong> ${data.chamado.nome}<br>
+                                        <strong>E-mail:</strong> ${data.chamado.email}<br>
+                                        <strong>Data/Hora:</strong> ${new Date(data.chamado.data_criacao).toLocaleString('pt-BR')}
+                                    </p>
+                                </div>
+                                <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                    <h4 style="color: #2563eb;">📞 Próximos Passos:</h4>
+                                    <p style="color: #64748b;">
+                                        • Nossa equipe analisará seu chamado<br>
+                                        • Você receberá um e-mail de confirmação<br>
+                                        • Entraremos em contato em até 2 horas<br>
+                                        • Use o número <strong>#${data.chamado.id}</strong> para acompanhar o status
+                                    </p>
+                                </div>
+                                <div style="margin-top: 30px;">
+                                    <a href="/" class="btn btn-primary" style="margin-right: 15px;">Voltar ao Início</a>
+                                    <button onclick="abrirNovoChamado()" class="btn btn-secondary">Abrir Novo Chamado</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll para o resultado
+                    resultado.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Esconder o formulário
+                    document.getElementById('chamadoForm').style.display = 'none';
+                    
+                } else {
+                    resultado.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Erro ao criar chamado</h4>
+                            <p>${data.error || 'Erro desconhecido. Tente novamente.'}</p>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                resultado.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Erro de Conexão</h4>
+                        <p>Não foi possível enviar o chamado. Verifique sua conexão e tente novamente.</p>
+                        <p>Se o problema persistir, ligue para <strong>(11) 99999-0000</strong></p>
+                    </div>
+                `;
+            } finally {
+                // Restaurar botão
+                submitBtn.disabled = false;
+                btnText.classList.remove('d-none');
+                btnLoading.classList.add('d-none');
+            }
+        });
+        
+        function abrirNovoChamado() {
+            document.getElementById('resultado').innerHTML = '';
+            document.getElementById('chamadoForm').style.display = 'block';
+            document.getElementById('chamadoForm').reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Formatação automática do telefone
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                value = value.replace(/(\d{2})(\d{1,5})/, '($1) $2');
+                e.target.value = value;
+            }
+        });
+        
+        // Validação em tempo real
+        document.getElementById('email').addEventListener('blur', function(e) {
+            const email = e.target.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                e.target.style.borderColor = '#ef4444';
+                if (!document.getElementById('email-error')) {
+                    const error = document.createElement('div');
+                    error.id = 'email-error';
+                    error.style.color = '#ef4444';
+                    error.style.fontSize = '0.875rem';
+                    error.style.marginTop = '5px';
+                    error.textContent = 'Por favor, digite um e-mail válido';
+                    e.target.parentNode.appendChild(error);
+                }
+            } else {
+                e.target.style.borderColor = '';
+                const error = document.getElementById('email-error');
+                if (error) error.remove();
+            }
+        });
+        
+        // Contagem de caracteres na descrição
+        document.getElementById('descricao').addEventListener('input', function(e) {
+            const maxLength = 1000;
+            const currentLength = e.target.value.length;
+            
+            let counter = document.getElementById('desc-counter');
+            if (!counter) {
+                counter = document.createElement('div');
+                counter.id = 'desc-counter';
+                counter.style.fontSize = '0.875rem';
+                counter.style.color = '#64748b';
+                counter.style.textAlign = 'right';
+                counter.style.marginTop = '5px';
+                e.target.parentNode.appendChild(counter);
+            }
+            
+            counter.textContent = `${currentLength}/${maxLength} caracteres`;
+            
+            if (currentLength > maxLength) {
+                counter.style.color = '#ef4444';
+                e.target.style.borderColor = '#ef4444';
+            } else {
+                counter.style.color = '#64748b';
+                e.target.style.borderColor = '';
+            }
+        });
+    </script>
+</body>
+</html>
