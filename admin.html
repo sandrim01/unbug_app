@@ -149,69 +149,298 @@
                         </div>
                     </div>
 
-                    <!-- Seção de Chamados -->
-                    <div id="secaoChamados" class="col-12 admin-section">
+            <!-- Seção de Chamados -->
+            <div id="secaoChamados" class="col-12 admin-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📋 Gestão de Chamados</h3>
+                        <div style="float: right;">
+                            <button class="btn btn-primary" onclick="adicionarChamado()">➕ Novo Chamado</button>
+                            <button class="btn btn-success" onclick="exportarChamados()">📊 Exportar</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Filtros -->
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <select id="filtroStatus" class="form-control" onchange="filtrarChamados()">
+                                    <option value="">Todos os Status</option>
+                                    <option value="aberto">Aberto</option>
+                                    <option value="em_andamento">Em Andamento</option>
+                                    <option value="aguardando_cliente">Aguardando Cliente</option>
+                                    <option value="resolvido">Resolvido</option>
+                                    <option value="fechado">Fechado</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select id="filtroUrgencia" class="form-control" onchange="filtrarChamados()">
+                                    <option value="">Todas as Urgências</option>
+                                    <option value="critica">Crítica</option>
+                                    <option value="alta">Alta</option>
+                                    <option value="media">Média</option>
+                                    <option value="baixa">Baixa</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" id="buscaChamado" class="form-control" placeholder="Buscar por cliente, assunto..." onkeyup="filtrarChamados()">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar</button>
+                            </div>
+                        </div>
+
+                        <!-- Tabela de Chamados -->
+                        <div class="table-responsive">
+                            <table class="table" id="tabelaChamados">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Assunto</th>
+                                        <th>Tipo</th>
+                                        <th>Urgência</th>
+                                        <th>Status</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Será preenchido dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para Editar Chamado -->
+                <div id="modalChamado" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                    <div style="position: relative; margin: 5% auto; width: 80%; max-width: 600px; background: white; border-radius: 8px; padding: 20px;">
+                        <h3 id="modalTitulo">Editar Chamado</h3>
+                        
+                        <form id="formChamado">
+                            <input type="hidden" id="chamadoId">
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Cliente:</label>
+                                        <input type="text" id="modalCliente" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>E-mail:</label>
+                                        <input type="email" id="modalEmail" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Telefone:</label>
+                                        <input type="text" id="modalTelefone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Empresa:</label>
+                                        <input type="text" id="modalEmpresa" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Assunto:</label>
+                                <input type="text" id="modalAssunto" class="form-control" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Tipo:</label>
+                                        <select id="modalTipo" class="form-control" required>
+                                            <option value="hardware">Hardware</option>
+                                            <option value="software">Software</option>
+                                            <option value="rede">Rede</option>
+                                            <option value="email">E-mail</option>
+                                            <option value="backup">Backup</option>
+                                            <option value="seguranca">Segurança</option>
+                                            <option value="desenvolvimento">Desenvolvimento</option>
+                                            <option value="outros">Outros</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Urgência:</label>
+                                        <select id="modalUrgencia" class="form-control" required>
+                                            <option value="baixa">Baixa</option>
+                                            <option value="media">Média</option>
+                                            <option value="alta">Alta</option>
+                                            <option value="critica">Crítica</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Status:</label>
+                                        <select id="modalStatus" class="form-control" required>
+                                            <option value="aberto">Aberto</option>
+                                            <option value="em_andamento">Em Andamento</option>
+                                            <option value="aguardando_cliente">Aguardando Cliente</option>
+                                            <option value="resolvido">Resolvido</option>
+                                            <option value="fechado">Fechado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Descrição:</label>
+                                <textarea id="modalDescricao" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Observações Internas:</label>
+                                <textarea id="modalObservacoes" class="form-control" rows="3" placeholder="Anotações para uso interno da equipe..."></textarea>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                                <button type="button" class="btn btn-secondary" onclick="fecharModal()">❌ Cancelar</button>
+                                <button type="button" class="btn btn-danger" onclick="excluirChamado()" id="btnExcluir">🗑️ Excluir</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>                    <div id="secaoClientes" class="col-12 admin-section" style="display: none;">
                         <div class="card">
                             <div class="card-header">
-                                <h3>📋 Chamados Recentes</h3>
+                                <h3>👥 Gestão de Clientes</h3>
+                                <button class="btn btn-primary" onclick="adicionarCliente()" style="float: right;">➕ Novo Cliente</button>
                             </div>
                             <div class="card-body">
+                                <!-- Filtros -->
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <input type="text" id="buscaCliente" class="form-control" placeholder="Buscar por nome, empresa, email..." onkeyup="filtrarClientes()">
+                                    </div>
+                                    <div class="col-3">
+                                        <select id="filtroStatusCliente" class="form-control" onchange="filtrarClientes()">
+                                            <option value="">Todos os Status</option>
+                                            <option value="ativo">Ativo</option>
+                                            <option value="inativo">Inativo</option>
+                                            <option value="vip">VIP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary" onclick="limparFiltrosClientes()">🔄 Limpar</button>
+                                        <button class="btn btn-success" onclick="exportarClientes()">📊 Exportar</button>
+                                    </div>
+                                </div>
+
+                                <!-- Tabela de Clientes -->
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" id="tabelaClientes">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Cliente</th>
-                                                <th>Assunto</th>
-                                                <th>Tipo</th>
-                                                <th>Urgência</th>
+                                                <th>Nome</th>
+                                                <th>Empresa</th>
+                                                <th>E-mail</th>
+                                                <th>Telefone</th>
                                                 <th>Status</th>
-                                                <th>Data</th>
+                                                <th>Últm. Chamado</th>
+                                                <th>Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>#2025001</td>
-                                                <td>João Silva</td>
-                                                <td>Computador não liga</td>
-                                                <td>Hardware</td>
-                                                <td><span class="badge badge-danger">Alta</span></td>
-                                                <td><span class="badge badge-warning">Em Andamento</span></td>
-                                                <td>15/09/2025</td>
-                                            </tr>
-                                            <tr>
-                                                <td>#2025002</td>
-                                                <td>Maria Santos</td>
-                                                <td>Internet lenta</td>
-                                                <td>Rede</td>
-                                                <td><span class="badge badge-warning">Média</span></td>
-                                                <td><span class="badge badge-danger">Aberto</span></td>
-                                                <td>15/09/2025</td>
-                                            </tr>
-                                            <tr>
-                                                <td>#2025003</td>
-                                                <td>Pedro Costa</td>
-                                                <td>Erro no sistema</td>
-                                                <td>Software</td>
-                                                <td><span class="badge badge-info">Baixa</span></td>
-                                                <td><span class="badge badge-success">Resolvido</span></td>
-                                                <td>14/09/2025</td>
-                                            </tr>
+                                            <!-- Preenchido dinamicamente -->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Outras seções (ocultas por padrão) -->
-                    <div id="secaoClientes" class="col-12 admin-section" style="display: none;">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>👥 Gestão de Clientes</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>Funcionalidade de gestão de clientes seria implementada aqui.</p>
+                        <!-- Modal para Cliente -->
+                        <div id="modalClientes" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                            <div style="position: relative; margin: 3% auto; width: 70%; max-width: 800px; background: white; border-radius: 8px; padding: 20px;">
+                                <h3 id="modalClienteTitulo">Novo Cliente</h3>
+                                
+                                <form id="formClientes">
+                                    <input type="hidden" id="clienteId">
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Nome Completo:</label>
+                                                <input type="text" id="clienteNome" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>E-mail:</label>
+                                                <input type="email" id="clienteEmail" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Telefone:</label>
+                                                <input type="text" id="clienteTelefone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Empresa:</label>
+                                                <input type="text" id="clienteEmpresa" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Status:</label>
+                                                <select id="clienteStatus" class="form-control">
+                                                    <option value="ativo">Ativo</option>
+                                                    <option value="inativo">Inativo</option>
+                                                    <option value="vip">VIP</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>CNPJ/CPF:</label>
+                                                <input type="text" id="clienteDocumento" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Data Cadastro:</label>
+                                                <input type="date" id="clienteDataCadastro" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Endereço:</label>
+                                        <textarea id="clienteEndereco" class="form-control" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Observações:</label>
+                                        <textarea id="clienteObservacoes" class="form-control" rows="3" placeholder="Informações adicionais sobre o cliente..."></textarea>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">💾 Salvar Cliente</button>
+                                        <button type="button" class="btn btn-secondary" onclick="fecharModalCliente()">❌ Cancelar</button>
+                                        <button type="button" class="btn btn-danger" onclick="excluirCliente()" id="btnExcluirCliente">🗑️ Excluir</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -219,21 +448,216 @@
                     <div id="secaoRelatorios" class="col-12 admin-section" style="display: none;">
                         <div class="card">
                             <div class="card-header">
-                                <h3>📊 Relatórios e Análises</h3>
+                                <h3>📊 Relatórios e Estatísticas</h3>
                             </div>
                             <div class="card-body">
-                                <p>Relatórios e dashboards seriam implementados aqui.</p>
+                                <!-- Filtros de Relatório -->
+                                <div class="row mb-3">
+                                    <div class="col-3">
+                                        <label>Período:</label>
+                                        <select id="periodoRelatorio" class="form-control" onchange="atualizarRelatorio()">
+                                            <option value="7">Últimos 7 dias</option>
+                                            <option value="30">Últimos 30 dias</option>
+                                            <option value="90">Últimos 3 meses</option>
+                                            <option value="365">Último ano</option>
+                                            <option value="custom">Personalizado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label>Data Início:</label>
+                                        <input type="date" id="dataInicio" class="form-control">
+                                    </div>
+                                    <div class="col-3">
+                                        <label>Data Fim:</label>
+                                        <input type="date" id="dataFim" class="form-control">
+                                    </div>
+                                    <div class="col-3">
+                                        <label>&nbsp;</label><br>
+                                        <button class="btn btn-primary" onclick="gerarRelatorio()">📈 Gerar Relatório</button>
+                                    </div>
+                                </div>
+
+                                <!-- Gráficos e Estatísticas -->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header">Chamados por Status</div>
+                                            <div class="card-body">
+                                                <canvas id="graficoStatus" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card">
+                                            <div class="card-header">Chamados por Tipo</div>
+                                            <div class="card-body">
+                                                <canvas id="graficoTipo" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">Evolução Mensal</div>
+                                            <div class="card-body">
+                                                <canvas id="graficoEvolucao" width="800" height="300"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tabela de Estatísticas -->
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">Estatísticas Detalhadas</div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table" id="tabelaEstatisticas">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Métrica</th>
+                                                                <th>Valor</th>
+                                                                <th>Comparação</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <!-- Preenchido dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                                <div class="text-center mt-3">
+                                                    <button class="btn btn-success" onclick="exportarRelatorio('excel')">📊 Exportar Excel</button>
+                                                    <button class="btn btn-info" onclick="exportarRelatorio('pdf')">📄 Exportar PDF</button>
+                                                    <button class="btn btn-warning" onclick="exportarRelatorio('csv')">📋 Exportar CSV</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div id="secaoConfiguracoes" class="col-12 admin-section" style="display: none;">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>⚙️ Configurações do Sistema</h3>
+                        <div class="row">
+                            <!-- Configurações do Sistema -->
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>⚙️ Configurações do Sistema</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="formConfiguracoes">
+                                            <div class="form-group">
+                                                <label>Nome da Empresa:</label>
+                                                <input type="text" id="nomeEmpresa" class="form-control" value="UnBug Informática">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>E-mail Principal:</label>
+                                                <input type="email" id="emailPrincipal" class="form-control" value="contato@unbug.com.br">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Telefone:</label>
+                                                <input type="text" id="telefonePrincipal" class="form-control" value="(11) 99999-9999">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Endereço:</label>
+                                                <textarea id="endereco" class="form-control" rows="3">Rua das Flores, 123
+Centro - São Paulo/SP
+CEP: 01234-567</textarea>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Horário de Funcionamento:</label>
+                                                <input type="text" id="horarioFuncionamento" class="form-control" value="Segunda a Sexta: 8h às 18h">
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary">💾 Salvar Configurações</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>Configurações gerais do sistema seriam implementadas aqui.</p>
+
+                            <!-- Gestão de Usuários -->
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>👥 Gestão de Usuários</h4>
+                                        <button class="btn btn-primary btn-sm" onclick="adicionarUsuario()" style="float: right;">➕ Novo Usuário</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Usuário</th>
+                                                        <th>Perfil</th>
+                                                        <th>Status</th>
+                                                        <th>Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tabelaUsuarios">
+                                                    <tr>
+                                                        <td>admin</td>
+                                                        <td><span class="badge badge-danger">Administrador</span></td>
+                                                        <td><span class="badge badge-success">Ativo</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-warning" onclick="editarUsuario('admin')">✏️</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>tecnico1</td>
+                                                        <td><span class="badge badge-info">Técnico</span></td>
+                                                        <td><span class="badge badge-success">Ativo</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-warning" onclick="editarUsuario('tecnico1')">✏️</button>
+                                                            <button class="btn btn-sm btn-danger" onclick="excluirUsuario('tecnico1')">🗑️</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Backup e Manutenção -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>💾 Backup e Manutenção</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <h5>Backup de Dados</h5>
+                                                <p>Último backup: 16/09/2025 08:00</p>
+                                                <button class="btn btn-success" onclick="realizarBackup()">📥 Fazer Backup</button>
+                                                <button class="btn btn-info" onclick="restaurarBackup()">📤 Restaurar</button>
+                                            </div>
+                                            <div class="col-4">
+                                                <h5>Limpeza de Dados</h5>
+                                                <p>Última limpeza: 10/09/2025</p>
+                                                <button class="btn btn-warning" onclick="limparDadosAntigos()">🧹 Limpar Dados Antigos</button>
+                                            </div>
+                                            <div class="col-4">
+                                                <h5>Logs do Sistema</h5>
+                                                <p>Tamanho atual: 2.5 MB</p>
+                                                <button class="btn btn-secondary" onclick="visualizarLogs()">📋 Ver Logs</button>
+                                                <button class="btn btn-danger" onclick="limparLogs()">🗑️ Limpar Logs</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -266,6 +690,6 @@
         </div>
     </footer>
 
-    <script src="js/admin.js"></script>
+    <script src="js/admin-completo.js"></script>
 </body>
 </html>
